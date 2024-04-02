@@ -1,0 +1,50 @@
+import matplotlib.pyplot as plt
+from matplotlib.patches import ArrowStyle
+
+# Defining the nodes and their positions
+nodes = {
+    "Start": (0, 1),
+    "Wallet 91252914\n-244.03596425 BTC": (1, 2),
+    "bc1qa3...d690": (2, 2),
+    "bc1qt0...hlzec\n+1.7 BTC": (1, 1),
+    "Transaction 1\n-0.28305076 BTC": (3, 3),
+    "Transaction 2\n-0.283141 BTC": (3, 2),
+    "Transaction 3\n-0.28305076 BTC": (3, 1),
+    "Transaction 4\n-0.85005076 BTC": (2, 1),
+    "Final Wallet?": (4, 2)
+}
+
+# Creating the figure and axis
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Drawing the nodes
+for node, (x, y) in nodes.items():
+    ax.text(x, y, node, ha='center', va='center', bbox=dict(facecolor='lightblue', edgecolor='black', boxstyle='round,pad=0.5'))
+
+# Drawing the arrows
+arrows = [
+    ("Start", "Wallet 91252914\n-244.03596425 BTC"),
+    ("Wallet 91252914\n-244.03596425 BTC", "bc1qa3...d690"),
+    ("bc1qa3...d690", "Transaction 1\n-0.28305076 BTC"),
+    ("bc1qa3...d690", "Transaction 2\n-0.283141 BTC"),
+    ("bc1qa3...d690", "Transaction 3\n-0.28305076 BTC"),
+    ("bc1qt0...hlzec\n+1.7 BTC", "Transaction 4\n-0.85005076 BTC"),
+    ("Transaction 1\n-0.28305076 BTC", "Final Wallet?"),
+    ("Transaction 2\n-0.283141 BTC", "Final Wallet?"),
+    ("Transaction 3\n-0.28305076 BTC", "Final Wallet?"),
+    ("Transaction 4\n-0.85005076 BTC", "Final Wallet?"),
+]
+
+for start, end in arrows:
+    start_pos = nodes[start]
+    end_pos = nodes[end]
+    ax.annotate("",
+                xy=end_pos, xycoords='data',
+                xytext=start_pos, textcoords='data',
+                arrowprops=dict(arrowstyle="->", color="black"))
+
+# Removing the axes
+ax.set_xlim(-1, 5)
+ax.set_ylim(0, 4)
+plt.axis('off')
+plt.show()
